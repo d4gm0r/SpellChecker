@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 /*
 void testTree()
@@ -69,6 +70,7 @@ std::vector<std::string> readFile(std::string file)
 				size = word.size();
 			}
 		}
+		std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 		words.push_back(word);
 	}
 
