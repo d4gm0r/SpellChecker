@@ -60,23 +60,30 @@ std::vector<std::string> readFile(std::string file)
 
 	std::ifstream fi(file);
 
-	while (fi >> word) 
+	if (file.compare("Letter.txt") == 0)
 	{
-		for (unsigned int i = 0, size = word.size(); i < size; i++)
+		while (fi >> word)
 		{
-			if (ispunct(word[i]))
+			for (unsigned int i = 0, size = word.size(); i < size; i++)
 			{
-				/*char punct = static_cast<char> (word[i]);
-				if (punct != "a")
+				if (ispunct(word[i]))
 				{
-
-				}*/
-				word.erase(i--, 1);
-				size = word.size();
+					//char punct = static_cast<char> (word[i]);
+					//if (punct != "a") {}
+					word.erase(i--, 1);
+					size = word.size();
+				}
 			}
+			std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+			words.push_back(word);
 		}
-		std::transform(word.begin(), word.end(), word.begin(), ::tolower);
-		words.push_back(word);
+	}
+	else
+	{
+		while (fi >> word)
+		{
+			words.push_back(word);
+		}
 	}
 
 	fi.close();
@@ -88,7 +95,7 @@ int main()
 {
 	std::vector<std::string> words = readFile("Letter.txt");
 
-	for (int i = 0; i < words.size(); i++)
+	for (unsigned int i = 0; i < words.size(); i++)
 	{
 		std::cout << words[i] << std::endl;
 	}
