@@ -11,7 +11,11 @@ public:
 	~BST();
 
 	bool insert(T value);
+	bool insert(Node* node, Node* newWord);
 	void remove(T value);
+	void remove(Node* node, Node* word);
+	bool search(T value);
+	bool search(Node* node, Node* word);
 	unsigned int numberNodes();
 	unsigned int numberLeafNodes();
 	unsigned int height();
