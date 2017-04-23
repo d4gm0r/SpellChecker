@@ -27,7 +27,6 @@ bool BST::insert(Node* node, Node* newWord)
 	if(node == nullptr)
 	{
 		node = newWord;
-		delete newWord;
 		return true;
 	}
 	else if (node->data.compare(newWord->data) < 0)
@@ -39,7 +38,6 @@ bool BST::insert(Node* node, Node* newWord)
 		insert(node->right, newWord);
 	}
 
-	delete newWord;
 	return false;
 }
 
@@ -86,13 +84,31 @@ void BST::remove(Node* node, Node* word)
 template <typename T>
 bool BST::search(T value)
 {
-
+	Node* ptrNew = new Node(value);
+	bool isFound = search(m_root, ptrNew);
+	delete ptrNew;
+	return isFound;
 }
 
 template <typename T>
 bool BST::search(Node* node, Node* word)
 {
-
+	if (node == nullptr)
+	{
+		return false;
+	}
+	if (node->data.compare(word->data) == 0)
+	{
+		return true;
+	}
+	else if (node->data.compare(word->data) < 0)
+	{
+		search(node->left, word);
+	}
+	else if (node->data.compare(word->data) > 0)
+	{
+		search(node->right, word);
+	}
 }
 
 template <typename T>
