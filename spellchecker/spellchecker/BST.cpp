@@ -114,7 +114,21 @@ bool BST::search(Node* node, Node* word)
 template <typename T>
 unsigned int BST::numberNodes()
 {
+	return numberNodes(m_root)
+}
 
+template <typename T>
+unsigned int BST::numberNodes(Node* node)
+{
+	unsigned int count = 0;
+	if (node)
+	{
+		count++;
+		count += numberNodes(node->left);
+		count += numberNodes(node->right);
+	}
+
+	return count;
 }
 
 template <typename T>
