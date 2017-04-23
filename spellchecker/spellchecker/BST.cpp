@@ -134,11 +134,33 @@ unsigned int BST::numberNodes(Node* node)
 template <typename T>
 unsigned int BST::numberLeafNodes()
 {
+	return numberLeafNodes(m_root);
+}
 
+template <typename T>
+unsigned int BST::numberLeafNodes(Node* node)
+{
+	unsigned int count = 0;
+	if (node)
+	{
+		if (node->left == nullptr && node->right == nullptr)
+		{
+			count++;
+		}
+		count += numberLeafNodes(node->left);
+		count += numberLeafNodes(node->right);
+	}
+	return count;
 }
 
 template <typename T>
 unsigned int BST::height()
+{
+	return height(m_root);
+}
+
+template <typename T>
+unsigned int BST::height(Node* node)
 {
 
 }
