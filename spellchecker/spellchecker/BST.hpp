@@ -7,15 +7,20 @@ template <typename T>
 struct Node
 {
 public:
+	Node() 
+	{
+		m_left = nullptr;
+		m_right = nullptr;
+	}
 	Node(T word)
 	{
 		m_left = nullptr;
 		m_right = nullptr;
-		m_word = word;
+		m_data = word;
 	}
 	Node<T>* m_left;
 	Node<T>* m_right;
-	T m_word;
+	T m_data;
 };
 
 template <typename T>
@@ -46,7 +51,7 @@ private:
 template <typename T>
 BST<T>::BST()
 {
-	m_root = nullptr;
+	m_root = new Node<T>();
 }
 
 template <typename T>
@@ -72,13 +77,13 @@ bool BST<T>::insert(Node<T>* node, Node<T>* newWord)
 		node = newWord;
 		return true;
 	}
-	else if (node->data.compare(newWord->data) < 0)
+	else if (node->m_data.compare(newWord->m_data) < 0)
 	{
-		insert(node->left, newWord);
+		insert(node->m_left, newWord);
 	}
-	else if (node->data.compare(newWord->data) > 0)
+	else if (node->m_data.compare(newWord->m_data) > 0)
 	{
-		insert(node->right, newWord);
+		insert(node->m_right, newWord);
 	}
 
 	return false;
@@ -93,32 +98,32 @@ void BST<T>::remove(T value)
 }
 
 template <typename T>
-void BST<T>::remove(Node<T>* node, Node<T>* word)
+void BST<T>::remove(Node<T>* node, Node<T>* word)//unfinished
 {
 	if (node == nullptr)
 	{
 		return;
 	}
-	if (node->data.compare(word->data) == 0)
+	if (node->m_data.compare(word->m_data) == 0)
 	{
-		if (node->left)
+		if (node->m_left)
 		{
 
 		}
-		if (node->right)
+		if (node->m_right)
 		{
 
 		}
 		delete node;
 		return;
 	}
-	else if (node->data.compare(word->data) < 0)
+	else if (node->m_data.compare(word->m_data) < 0)
 	{
-		remove(node->left, newWord);
+		remove(node->m_left, newWord);
 	}
-	else if (node->data.compare(word->data) > 0)
+	else if (node->m_data.compare(word->m_data) > 0)
 	{
-		remove(node->right, newWord);
+		remove(node->m_right, newWord);
 	}
 
 	return false;
@@ -140,36 +145,39 @@ bool BST<T>::search(Node<T>* node, Node<T>* word)
 	{
 		return false;
 	}
-	if (node->data.compare(word->data) == 0)
+	if (node->m_data.compare(word->m_data) == 0)
 	{
 		return true;
 	}
-	else if (node->data.compare(word->data) < 0)
+	else if (node->m_data.compare(word->m_data) < 0)
 	{
-		search(node->left, word);
+		search(node->m_left, word);
 	}
-	else if (node->data.compare(word->data) > 0)
+	else if (node->m_data.compare(word->m_data) > 0)
 	{
-		search(node->right, word);
+		search(node->m_right, word);
 	}
 }
 
 template <typename T>
 unsigned int BST<T>::numberNodes()
 {
-	return numberN(m_root)
+	return numberN(m_root);
 }
 
 template <typename T>
 unsigned int BST<T>::numberN(Node<T>* node)
 {
 	unsigned int count = 0;
-	if (node)
+
+	if (node == nullptr)
 	{
-		count++;
-		count += numberN(node->left);
-		count += numberN(node->right);
+		return 0;
 	}
+
+	++count;
+	count += numberN(node->m_left);
+	count += numberN(node->m_right);
 
 	return count;
 }
@@ -184,15 +192,19 @@ template <typename T>
 unsigned int BST<T>::numberLN(Node<T>* node)
 {
 	unsigned int count = 0;
-	if (node)
+
+	if (node == nullptr)
 	{
-		if (node->left == nullptr && node->right == nullptr)
-		{
-			count++;
-		}
-		count += numberLN(node->left);
-		count += numberLN(node->right);
+		return 0;
 	}
+	if (node->m_left == nullptr && node->m_right == nullptr)
+	{
+		++count;
+	}
+
+	count += numberLN(node->m_left);
+	count += numberLN(node->m_right);
+
 	return count;
 }
 
@@ -203,7 +215,7 @@ unsigned int BST<T>::height()
 }
 
 template <typename T>
-unsigned int BST<T>::heightTree(Node<T>* node)
+unsigned int BST<T>::heightTree(Node<T>* node)//unfinished
 {
 	unsigned int height = 0;
 	unsigned int tempCount = 0;
@@ -211,7 +223,7 @@ unsigned int BST<T>::heightTree(Node<T>* node)
 	if (node)
 	{
 		tempCount++;
-		if (node->left == nullptr && node->right == nullptr)
+		if (node->m_left == nullptr && node->m_right == nullptr)
 		{
 			return height + tempCount;
 		}

@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 
+#include "BST.hpp"
+
 /*
 void testTree()
 {
@@ -91,13 +93,30 @@ std::vector<std::string> readFile(std::string file)
 	return words;
 }
 
+void report(BST<std::string> tree)
+{
+	unsigned int nodes = tree.numberNodes();
+	unsigned int leafyNodes = tree.numberLeafNodes();
+	//unsigned int height = tree.height();
+
+	std::cout << "----Tree Stats----" << std::endl;
+	std::cout << "Total Nodes: " << nodes << std::endl;
+	std::cout << "Leaf Nodes: " << leafyNodes << std::endl;
+	//std::cout << "Tree Height: " << height << std::endl;
+}
+
 int main()
 {
-	std::vector<std::string> words = readFile("Letter.txt");
+	std::vector<std::string> dictionary = readFile("Dictionary.txt");
+	std::random_shuffle(dictionary.begin(), dictionary.end());
 
-	for (unsigned int i = 0; i < words.size(); i++)
+	BST<std::string> tree;
+	for (auto word : dictionary)
 	{
-		std::cout << words[i] << std::endl;
+		std::cout << tree.insert(word) << std::endl;
 	}
+	report(tree);
+	
+	
 	return 0;
 }
