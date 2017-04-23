@@ -17,10 +17,21 @@ public:
 	unsigned int height();
 
 private:
-	T* m_words;
-	T* m_root;
-	T* m_left;
-	T* m_right;
+	class Node
+	{
+	public:
+		Node(T word)
+		{
+			m_left = nullptr;
+			m_right = nullptr;
+			m_word = word;
+		}
+		Node* m_left;
+		Node* m_right;
+		T* m_word;
+	};
+
+	Node* m_root;
 };
 
 #endif //SPELLCHECKER_BST_HPP

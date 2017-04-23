@@ -66,6 +66,11 @@ std::vector<std::string> readFile(std::string file)
 		{
 			if (ispunct(word[i]))
 			{
+				/*char punct = static_cast<char> (word[i]);
+				if (punct != "a")
+				{
+
+				}*/
 				word.erase(i--, 1);
 				size = word.size();
 			}
