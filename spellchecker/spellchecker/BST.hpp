@@ -7,7 +7,7 @@ template <typename T>
 struct Node
 {
 public:
-	Node() 
+	Node()
 	{
 		m_left = nullptr;
 		m_right = nullptr;
@@ -59,8 +59,8 @@ BST<T>::BST()
 template <typename T>
 BST<T>::~BST()
 {
-	delTree(m_root);
-	m_root = nullptr;
+	//delTree(m_root);
+	//m_root = nullptr;
 }
 
 template <typename T>
@@ -86,7 +86,7 @@ bool BST<T>::insert(T value)
 template <typename T>
 bool BST<T>::insert(Node<T>* node, T value)
 {
-	if ((node == m_root) && (m_root->m_data == "")) 
+	if ((node == m_root) && (m_root->m_data == ""))
 	{
 		node->m_data = value;
 		return true;
@@ -104,7 +104,7 @@ bool BST<T>::insert(Node<T>* node, T value)
 	{
 		insert(node->m_right, value);
 	}
-	else 
+	else
 	{
 		return false;
 	}

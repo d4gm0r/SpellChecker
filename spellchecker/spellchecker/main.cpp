@@ -55,7 +55,7 @@ std::cout << "Expecting height of 6, found " << tree.height() << std::endl;
 }
 */
 
-std::vector<std::string> readFile(std::string file) 
+std::vector<std::string> readFile(std::string file)
 {
 	std::string word = "";
 	std::vector<std::string> words;
@@ -113,10 +113,10 @@ int main()
 	BST<std::string> tree;
 	/*for (auto word : dictionary)
 	{
-		std::cout << tree.insert(word) << std::endl;
+	std::cout << tree.insert(word) << std::endl;
 	}*/
 	report(tree);
 	std::vector<std::string> letter = readFile("Letter.txt");
-	
+
 	return 0;
 }
