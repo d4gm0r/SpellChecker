@@ -11,6 +11,7 @@ public:
 	{
 		m_left = nullptr;
 		m_right = nullptr;
+		m_data = "";
 	}
 	Node(T word)
 	{
@@ -18,9 +19,9 @@ public:
 		m_right = nullptr;
 		m_data = word;
 	}
-	Node<T>* m_left;
-	Node<T>* m_right;
-	T m_data;
+	Node<T>* m_left = nullptr;
+	Node<T>* m_right = nullptr;
+	T m_data = "";
 };
 
 template <typename T>
@@ -30,8 +31,9 @@ public:
 	BST();
 	~BST();
 
+	void delTree(Node<T>* node);
 	bool insert(T value);
-	bool insert(Node<T>* node, Node<T>* newWord);
+	bool insert(Node<T>* node, T value);
 	void remove(T value);
 	void remove(Node<T>* node, Node<T>* word);
 	bool search(T value);
@@ -57,36 +59,55 @@ BST<T>::BST()
 template <typename T>
 BST<T>::~BST()
 {
+	delTree(m_root);
+	m_root = nullptr;
+}
 
+template <typename T>
+void BST<T>::delTree(Node<T>* node)
+{
+	if (node == nullptr)
+	{
+		return;
+	}
+
+	delTree(node->m_left);
+	delTree(node->m_right);
+
+	delete node;
 }
 
 template <typename T>
 bool BST<T>::insert(T value)
 {
-	Node<T>* ptrNew = new Node<T>(value);
-	bool isInserted = insert(m_root, ptrNew);
-	delete ptrNew;
-	return isInserted;
+	return insert(m_root, value);
 }
 
 template <typename T>
-bool BST<T>::insert(Node<T>* node, Node<T>* newWord)
+bool BST<T>::insert(Node<T>* node, T value)
 {
-	if (node == nullptr)
+	if ((node == m_root) && (m_root->m_data == "")) 
 	{
-		node = newWord;
+		node->m_data = value;
 		return true;
 	}
-	else if (node->m_data.compare(newWord->m_data) < 0)
+	else if (!node)
 	{
-		insert(node->m_left, newWord);
+		node = new Node<T>(value);
+		return true;
 	}
-	else if (node->m_data.compare(newWord->m_data) > 0)
+	else if (node->m_data.compare(value) < 0)
 	{
-		insert(node->m_right, newWord);
+		insert(node->m_left, value);
 	}
-
-	return false;
+	else if (node->m_data.compare(value) > 0)
+	{
+		insert(node->m_right, value);
+	}
+	else 
+	{
+		return false;
+	}
 }
 
 template <typename T>
@@ -125,8 +146,11 @@ void BST<T>::remove(Node<T>* node, Node<T>* word)//unfinished
 	{
 		remove(node->m_right, newWord);
 	}
+	else
+	{
+		return false;
+	}
 
-	return false;
 }
 
 template <typename T>
@@ -215,7 +239,7 @@ unsigned int BST<T>::height()
 }
 
 template <typename T>
-unsigned int BST<T>::heightTree(Node<T>* node)//unfinished
+unsigned int BST<T>::heightTree(Node<T>* node) //unfinished
 {
 	unsigned int height = 0;
 	unsigned int tempCount = 0;
